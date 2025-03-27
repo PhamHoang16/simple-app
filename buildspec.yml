@@ -16,9 +16,11 @@ phases:
       - echo "Building the Docker image..."
       - docker build -t demo .
       - docker tag demo:latest 084828593912.dkr.ecr.ap-southeast-1.amazonaws.com/demo:latest
+      - docker tag demo:latest $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
+      - echo "IMAGE_TAG=$IMAGE_TAG"
       - echo "Build completed on $(date)"
       - echo "Pushing the Docker images..."
       - docker push 084828593912.dkr.ecr.ap-southeast-1.amazonaws.com/demo:latest
