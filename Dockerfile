@@ -1,16 +1,20 @@
-FROM node:16
+# Chọn base image phù hợp với kiến trúc amd64 để tránh lỗi "exec format error"
+FROM --platform=linux/amd64 node:16-bullseye
 
-#create app directory
+# Tạo thư mục ứng dụng và đặt nó làm thư mục làm việc
 WORKDIR /app
 
-# install dependencies 
-# A Wildcard to make sure that we will copy both package.json and package-lock.json
+# Copy package.json và package-lock.json trước để tận dụng Docker cache
 COPY package*.json /app/
 
-RUN npm install
+# Cài đặt dependencies
+RUN npm install --omit=dev
 
-# Bundle app source
-COPY . . 
+# Copy toàn bộ mã nguồn vào container
+COPY . .
 
+# Mở port 8080 để chạy ứng dụng
 EXPOSE 8080
+
+# Chạy ứng dụng
 CMD ["npm", "start"]
