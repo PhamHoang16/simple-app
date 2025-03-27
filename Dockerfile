@@ -1,5 +1,5 @@
 # Chọn base image phù hợp với kiến trúc amd64 để tránh lỗi "exec format error"
-FROM --platform=linux/amd64 node:16-bullseye
+FROM node:16-bullseye
 
 # Tạo thư mục ứng dụng và đặt nó làm thư mục làm việc
 WORKDIR /app
